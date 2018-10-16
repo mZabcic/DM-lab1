@@ -1,0 +1,30 @@
+{
+  "name": "dm-lab1",
+  "version": "1.0.0",
+  "description": "Labos 1",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap test/*.test.js test/*/*.test.js test/*/*/*.test.js",
+    "start": "fastify start -l info app.js",
+    "dev": "fastify start -l info -P app.js"
+  },
+  "author": "MŽ",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "fastify": "^1.11.0",
+    "fastify-autoload": "^0.5.1",
+    "fastify-cli": "^0.22.1",
+    "fastify-mongodb": "^0.9.0",
+    "fastify-mongoose": "^0.2.1",
+    "fastify-oauth2": "^0.2.1",
+    "fastify-plugin": "^1.2.1",
+    "make-promises-safe": "^1.1.0",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "simple-get": "^3.0.3"
+  },
+  "devDependencies": {
+    "tap": "^12.0.0"
+  }
+}
