@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-homepage',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomepageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userService : UserService) { }
+
+  user : any;
 
   ngOnInit() {
+    this.userService.current().subscribe((data) => {
+      console.log(data);
+    }, (e) => {
+      console.log(e);
+    })
   }
 
 }

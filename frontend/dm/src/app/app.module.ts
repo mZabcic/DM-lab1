@@ -15,6 +15,7 @@ import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider} from
 import { NavbarComponent } from './navbar/navbar.component';
 import { ByeComponent } from './bye/bye.component';
 import { FooterComponent } from './footer/footer.component';
+import { UserService } from './user.service';
  
  
 let config = new AuthServiceConfig([
@@ -69,7 +70,7 @@ export function tokenGetter() {
   providers: [AuthGuard, AuthService, {
     provide: AuthServiceConfig,
     useFactory: provideConfig
-  }, GuestGuard],
+  }, GuestGuard, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
