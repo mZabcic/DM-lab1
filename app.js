@@ -84,7 +84,7 @@ module.exports = function (fastify, opts, next) {
         required: false
       }
       , games: { data: [{ name: String, id: Number, created_time: Date }] }
-      , favorite_teams: [{ id: Number, name: String }]
+      , favorite_teams: [{ id: Number, name: String, fdId : Number }]
       , music: { data: [{ name: String, id: Number, created_time: Date }] }
     });
     var User = fastify.mongo.db.model('user', userSchema);

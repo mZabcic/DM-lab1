@@ -16,6 +16,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ByeComponent } from './bye/bye.component';
 import { FooterComponent } from './footer/footer.component';
 import { UserService } from './user.service';
+import { TeamsService } from './teams.service';
  
  
 let config = new AuthServiceConfig([
@@ -70,7 +71,7 @@ export function tokenGetter() {
   providers: [AuthGuard, AuthService, {
     provide: AuthServiceConfig,
     useFactory: provideConfig
-  }, GuestGuard, UserService],
+  }, GuestGuard, UserService, TeamsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

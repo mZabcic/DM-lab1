@@ -61,7 +61,19 @@ fastify.get(
       beforeHandler: [fastify.authenticate]
     },
     async function(request, reply) {
-      return request.user
+      var User = fastify.mongo.db.model('user');
+      User.findOne({id : request.user.id}, function(err, doc) {
+        if (err) {
+          reply.send(err)
+          return
+        }
+        if (!doc) {
+          throw new NotFound()
+        }
+        reply.send(doc);
+        return
+      });
+      
     }
   )
 
@@ -140,7 +152,7 @@ fastify.get(
                     reply.send(err)
                   }
                   console.log('New user')
-                  const token = fastify.jwt.sign(docs.toObject())
+                  const token = fastify.jwt.sign({id : docs.id, name : docs.name, authToken : docs.authToken})
                   reply.send({ token })
                 })
            }) 
@@ -151,7 +163,7 @@ fastify.get(
               reply.send(err)
             }
             console.log('Existing user')
-            const token = fastify.jwt.sign(docs.toObject())
+            const token = fastify.jwt.sign({id : docs.id, name : docs.name, authToken : docs.authToken})
             reply.send({ token })
           }) 
          }

@@ -1,6 +1,7 @@
+<ng-container *ngIf="user != undefined">
 <div class="columns">
   <div class="column is-half">
-<div *ngIf="user != undefined" class="card">
+<div  class="card">
   <div class="card-content">
     <div class="media">
       <div class="media-left">
@@ -43,3 +44,72 @@
 </div>
 </div>
 </div>
+
+<div class="tabs is-toggle is-fullwidth">
+  <ul>
+    <li [ngClass]="currentTab == 'music' ? 'is-active' : ''" (click)="select('music')">
+      <a>
+        <span class="icon is-small"><i class="fas fa-music" aria-hidden="true"></i></span>
+        <span>Music</span>
+      </a>
+    </li>
+    <li [ngClass]="currentTab == 'games' ? 'is-active' : ''" (click)="select('games')">
+      <a>
+        <span class="icon is-small"><i class="fab fa-teamspeak"></i></span>
+        <span>Games</span>
+      </a>
+    </li>
+    <li [ngClass]="currentTab == 'favorite_teams' ? 'is-active' : ''" (click)="select('favorite_teams')">
+      <a>
+        <span class="icon is-small"><i class="fas fa-users"></i></span>
+        <span>Teams</span>
+      </a>
+    </li>
+  </ul>
+</div>
+<div *ngIf="currentTab == 'music'" class="box">
+  <div class="tags">
+    <span *ngFor="let music of user.music.data" class="tag">{{music.name}}</span>
+  </div>
+</div>
+<div *ngIf="currentTab == 'games'" class="box">
+  <div class="tags">
+    <span *ngFor="let game of user.games.data" class="tag">{{game.name}}</span>
+  </div>
+</div>
+<div *ngIf="currentTab == 'favorite_teams'" class="box">
+  <div class="tags">
+    <ng-container *ngFor="let team of user.favorite_teams">
+    <span  (click)="teamInfo(team)" class="tag">{{team.name}}</span>
+  </ng-container>
+  </div>
+  <div *ngIf="currentTeam != undefined" class="box">
+      <table *ngIf="players != undefined && players.length > 0" class="table">
+          <thead>
+            <tr>
+              <th>Player name</th>
+              <th>Jersey number</th>
+              <th>Date of birth</th>
+              <th>Nationality</th>
+              <th>Position</th>
+              <th>Contact until</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let player of players">
+              <th>{{player.name}}</th>
+              <th>{{player.jerseyNumber}}</th>
+              <th>{{player.dateOfBirth | date:'d.M.yyyy.'}}</th>
+              <th>{{player.nationality}}</th>
+              <th>{{player.position}}</th>
+              <th>{{player.contractUntil| date:'d.M.yyyy.'}}</th>
+            </tr>
+          
+          </tbody>
+        </table>
+        <div *ngIf="players == undefined" class="notification is-danger">
+            There is no data about players of this team on <a href="https://www.football-data.org/docs/v1" target="_blank">www.football-data.org</a>
+          </div> 
+  </div>
+</div>
+</ng-container>
