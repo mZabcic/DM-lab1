@@ -1,5 +1,8 @@
 <section class="login">
   <div class="content has-text-centered">
-    <div class="lds-hourglass"></div>
+    <div *ngIf="loader" class="lds-hourglass"></div>
+    <button (click)="startLogin()" class="loginBtn loginBtn--facebook">
+      Login with Facebook
+    </button>
   </div>
 </section>

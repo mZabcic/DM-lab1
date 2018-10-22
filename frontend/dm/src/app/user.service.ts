@@ -16,5 +16,13 @@ export class UserService {
     headers = headers.append('Authorization', 'Bearer' + localStorage.getItem('access_token'));
     return this.http.get(url, {headers}).pipe();
   }
+
+
+  public refresh() : Observable<any> {
+    const url = "http://localhost:3000/user/refresh";
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Authorization', 'Bearer' + localStorage.getItem('access_token'));
+    return this.http.get(url, {headers}).pipe();
+  }
   
 }

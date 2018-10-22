@@ -1,3 +1,45 @@
-<p>
-  homepage works!
-</p>
+<div class="columns">
+  <div class="column is-half">
+<div *ngIf="user != undefined" class="card">
+  <div class="card-content">
+    <div class="media">
+      <div class="media-left">
+        <figure class="image is-48x48">
+          <img src="{{ user.photoUrl }}" alt="Placeholder image">
+        </figure>
+      </div>
+      <div class="media-content">
+        <p class="title is-4">{{ user.name }}</p>
+        <p class="subtitle is-6"><a href = "mailto:{{ user.email }}">{{ user.email }}</a></p>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="field">
+        <label class="label">Date of birth</label>
+        <div class="control">
+          {{ user.birthday | date:'d.M.yyyy.'}}
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Gender</label>
+        <div class="control">
+          {{ user.gender }}
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Hometown</label>
+        <div class="control">
+          {{ user.hometown.name }}
+        </div>
+      </div>
+            
+    </div>
+  </div>
+  <footer class="card-footer">
+    <a (click)="refresh()" class="card-footer-item">Refresh facebook data</a>
+   
+  </footer>
+</div>
+</div>
+</div>
