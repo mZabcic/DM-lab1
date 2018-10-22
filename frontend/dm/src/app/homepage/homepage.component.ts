@@ -47,7 +47,7 @@ export class HomepageComponent implements OnInit {
     if (team.fdId == null) {
        this.teamService.getFDInfo(team).subscribe(data => {
          if (data.teams.length == 0) {
-           this.players = {};
+           this.players = [];
            return
          }
          this.teamService.saveFdId(data.teams[0].id, team.id).subscribe((d) => {

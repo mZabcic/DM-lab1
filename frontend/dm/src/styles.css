@@ -128,4 +128,14 @@ article {
 .loginBtn--google:focus {
   background: #E74B37;
 }
+
+.tag.is-active {
+  background-color: #3273dc;
+    border-color: #3273dc;
+    color: #fff;
+}
+
+.tag {
+  cursor: pointer;
+}
   

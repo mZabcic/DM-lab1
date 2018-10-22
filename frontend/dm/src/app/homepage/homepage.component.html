@@ -80,7 +80,7 @@
 <div *ngIf="currentTab == 'favorite_teams'" class="box">
   <div class="tags">
     <ng-container *ngFor="let team of user.favorite_teams">
-    <span  (click)="teamInfo(team)" class="tag">{{team.name}}</span>
+    <span  [ngClass]="currentTeam == team ? 'is-active' : ''" (click)="teamInfo(team)" class="tag">{{team.name}}</span>
   </ng-container>
   </div>
   <div *ngIf="currentTeam != undefined" class="box">
@@ -107,7 +107,7 @@
           
           </tbody>
         </table>
-        <div *ngIf="players == undefined" class="notification is-danger">
+        <div *ngIf="players.length == 0" class="notification is-danger">
             There is no data about players of this team on <a href="https://www.football-data.org/docs/v1" target="_blank">www.football-data.org</a>
           </div> 
   </div>
