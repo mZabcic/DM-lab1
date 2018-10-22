@@ -5,11 +5,13 @@ import { HomepageComponent }             from './homepage/homepage.component';
 import { AuthGuard } from './auth.guard';
 import { GuestGuard } from './guest.guard';
 import { ByeComponent } from './bye/bye.component';
+import { FbLoginComponent } from './fb-login/fb-login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomepageComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [GuestGuard]  },
+  { path: 'fblogin', component: FbLoginComponent, canActivate: [GuestGuard]  },
   { path: 'bye', component: ByeComponent, canActivate: [GuestGuard]  }
 ];
 

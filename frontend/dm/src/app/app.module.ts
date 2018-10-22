@@ -17,6 +17,8 @@ import { ByeComponent } from './bye/bye.component';
 import { FooterComponent } from './footer/footer.component';
 import { UserService } from './user.service';
 import { TeamsService } from './teams.service';
+import { MusicService } from './music.service';
+import { FbLoginComponent } from './fb-login/fb-login.component';
  
  
 let config = new AuthServiceConfig([
@@ -53,7 +55,8 @@ export function tokenGetter() {
     HomepageComponent,
     NavbarComponent,
     ByeComponent,
-    FooterComponent
+    FooterComponent,
+    FbLoginComponent
   ],
   imports: [
     SocialLoginModule,
@@ -71,7 +74,7 @@ export function tokenGetter() {
   providers: [AuthGuard, AuthService, {
     provide: AuthServiceConfig,
     useFactory: provideConfig
-  }, GuestGuard, UserService, TeamsService],
+  }, GuestGuard, UserService, TeamsService, MusicService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

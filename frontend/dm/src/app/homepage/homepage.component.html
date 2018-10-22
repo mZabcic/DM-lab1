@@ -1,4 +1,4 @@
-<ng-container *ngIf="user != undefined">
+<ng-container *ngIf="user != undefined && !refreshing">
 <div class="columns">
   <div class="column is-half">
 <div  class="card">
@@ -69,8 +69,44 @@
 </div>
 <div *ngIf="currentTab == 'music'" class="box">
   <div class="tags">
-    <span *ngFor="let music of user.music.data" class="tag">{{music.name}}</span>
+  <ng-container  *ngFor="let music of user.music.data">
+    <span [ngClass]="currentArtist == music ? 'is-active' : ''" (click)="albumInfo(music)" class="tag">{{music.name}}</span>
+  </ng-container>
   </div>
+  <div *ngIf="currentArtist != undefined " class="box">
+      <div *ngIf="albums != undefined && albums.length > 0 && !loader" class="columns is-multiline">
+        <div *ngFor="let album of albums" class="column is-half">
+        <div   class="card">
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <img *ngIf="album.image[2].text.length > 0" src="{{album.image[2].text}}" alt="">
+                <img *ngIf="album.image[2].text.length == 0" src="https://i0.wp.com/hifadhiafrica.org/wp-content/uploads/2017/01/default-placeholder.png" alt="">
+              </figure>
+            </div>
+            <div class="card-content">
+              <div class="media">
+                
+                <div class="media-content">
+                  <p class="title is-4">{{album.name}}</p>
+                  <p class="subtitle is-6"><a href="{{album.artist.url}}" targer="_blank"> {{album.artist.name}} </a></p>
+                </div>
+              </div>
+          
+              <div class="content">
+                <strong>Play count:</strong> {{album.playcount}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="albums.length == 0 && !loader" class="notification is-danger">
+          There is no data about albums of this artist on <a href="https://www.last.fm/api/" target="_blank">last.fm</a>
+        </div> 
+        <div *ngIf="loader"  class="content has-text-centered">
+            <div class="lds-hourglass"></div>
+            
+          </div>
+</div>
 </div>
 <div *ngIf="currentTab == 'games'" class="box">
   <div class="tags">
@@ -113,3 +149,7 @@
   </div>
 </div>
 </ng-container>
+<div *ngIf="refreshing"  class="content has-text-centered">
+    <div class="lds-hourglass"></div>
+    
+  </div>

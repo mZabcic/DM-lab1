@@ -23,6 +23,7 @@
     "fastify-multipart": "^0.5.1",
     "fastify-oauth2": "^0.2.1",
     "fastify-plugin": "^1.2.1",
+    "http-errors": "^1.7.1",
     "make-promises-safe": "^1.1.0",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",

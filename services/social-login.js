@@ -1,5 +1,6 @@
 'use strict'
 const sget = require('simple-get')
+const { NotFound } = require('http-errors')
 
 module.exports = async function (fastify, opts) {
 
@@ -68,7 +69,7 @@ fastify.get(
           return
         }
         if (!doc) {
-          throw new NotFound()
+          reply.send(new NotFound())
         }
         reply.send(doc);
         return
@@ -97,18 +98,16 @@ fastify.get(
           reply.send(err)
           return
         }
-        
         data.authToken = request.user.authToken;
         data.photoUrl = data.picture.data.url;
         var user = new User(data);
-        User.find({id : request.user.id}, function (err, doc) {
+        User.findOne({id : request.user.id}, function (err, doc) {
           if (err) return handleError(err);
-          doc = user; 
-          doc.save(function (err, updatedUser) {
-            if (err) return handleError(err);
-            console.log('User data refreshed')
-            reply.send(updatedUser);
-          });
+          if (!doc) {
+            reply.send(new NotFound())
+          }
+          doc = user;
+          User.update({ id: request.user.id }, doc, function() { reply.send(doc) });
         });
        }) 
     }
@@ -126,8 +125,7 @@ fastify.get(
       var User = fastify.mongo.db.model('user');
       User.findOne({id : userId}, function(err, doc) {
         if (err) {
-          reply.send(err)
-          return
+          doc = null
         }
         //console.log(doc);
          if (doc == null) {
@@ -158,14 +156,10 @@ fastify.get(
            }) 
          } else {
            doc.authToken = accesToken;
-           doc.save(function (err, docs) {
-            if (err) {
-              reply.send(err)
-            }
-            console.log('Existing user')
-            const token = fastify.jwt.sign({id : docs.id, name : docs.name, authToken : docs.authToken})
-            reply.send({ token })
-          }) 
+          
+          User.update({ id: userId }, doc, function() { console.log('Existing user')
+          const token = fastify.jwt.sign({id : userId, name : doc.name, authToken : doc.authToken})
+          reply.send({ token }) });
          }
       }); 
        
