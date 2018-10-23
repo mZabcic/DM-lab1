@@ -4,6 +4,7 @@ import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { TeamsService } from '../teams.service';
 import { MusicService } from '../music.service';
+import { GamesService } from '../games.service';
 
 @Component({
   selector: 'app-homepage',
@@ -12,7 +13,7 @@ import { MusicService } from '../music.service';
 })
 export class HomepageComponent implements OnInit {
 
-  constructor(private userService : UserService, private authService : AuthService, private router : Router, private teamService : TeamsService, private musicService : MusicService) { }
+  constructor(private gamesService : GamesService, private userService : UserService, private authService : AuthService, private router : Router, private teamService : TeamsService, private musicService : MusicService) { }
 
   user : any;
   currentTab : String = 'music';
@@ -22,6 +23,9 @@ export class HomepageComponent implements OnInit {
   currentArtist : any;
   loader : boolean = false;
   refreshing : boolean = false;
+  currentGame : any;
+  gameLoading : boolean = false;
+  currentGameInfo : any;
 
 
   ngOnInit() {
@@ -93,12 +97,38 @@ export class HomepageComponent implements OnInit {
               this.albums[i].image[j] = JSON.parse(text);
             }
           }
-         // console.log(this.albums)
+         //console.log(this.albums)
         }
         this.loader = false;
       }, (err) => {
         this.loader = false;
       })
+    }
+
+    gameInfo(game : any) {
+      this.currentGame = game;
+      this.gameLoading = true;
+      this.currentGameInfo = {};
+      var name = this.currentGame.name;
+        this.gamesService.getGameInfoByName(name).subscribe((data) => {
+            this.currentGameInfo = data;
+            var length = this.currentGameInfo.length;
+            for (let i = 0; i < length; i++) {
+              var genreId = this.currentGameInfo[i].genres[0];
+              this.gamesService.getGenre(genreId).subscribe((d) => {
+                this.currentGameInfo[i].genreName = d[0].name;
+                if (i == length - 1)  {
+                  this.gameLoading = false;
+                  console.log(this.currentGameInfo)
+                 
+                }
+              })
+            }
+          
+          
+        }, (err) => {
+          this.gameLoading = false;
+        })
     }
   
 

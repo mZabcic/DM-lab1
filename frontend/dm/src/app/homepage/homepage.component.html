@@ -78,10 +78,12 @@
         <div *ngFor="let album of albums" class="column is-half">
         <div   class="card">
             <div class="card-image">
+              <a href="{{album.url}}" target="_blank">
               <figure class="image is-4by3">
                 <img *ngIf="album.image[2].text.length > 0" src="{{album.image[2].text}}" alt="">
                 <img *ngIf="album.image[2].text.length == 0" src="https://i0.wp.com/hifadhiafrica.org/wp-content/uploads/2017/01/default-placeholder.png" alt="">
               </figure>
+            </a>
             </div>
             <div class="card-content">
               <div class="media">
@@ -110,8 +112,46 @@
 </div>
 <div *ngIf="currentTab == 'games'" class="box">
   <div class="tags">
-    <span *ngFor="let game of user.games.data" class="tag">{{game.name}}</span>
+    <ng-container *ngFor="let game of user.games.data">
+    <span [ngClass]="currentGame == game ? 'is-active' : ''"   (click)="gameInfo(game)" class="tag">{{game.name}}</span>
+  </ng-container>
   </div>
+  <div *ngIf="currentGameInfo != undefined " class="box">
+      <div *ngIf="currentGameInfo != undefined && currentGameInfo.length > 0 && !gameLoading" class="columns is-multiline">
+          <div *ngFor="let game of currentGameInfo" class="column is-one-quarter">
+          <div   class="card">
+              <div class="card-image">
+                <a href="{{game.url}}" target="_blank">
+                <figure class="image is-4by3">
+                  <img *ngIf="game.cover != undefined" src="{{game.cover.url}}" alt="">
+                  <img *ngIf="game.cover == undefined" src="https://i0.wp.com/hifadhiafrica.org/wp-content/uploads/2017/01/default-placeholder.png" alt="">
+                </figure>
+              </a>
+              </div>
+              <div class="card-content">
+                <div class="media">
+                  
+                  <div class="media-content">
+                    <p class="title is-4">{{game.name}}</p>
+                    <p class="subtitle is-6"><strong>Genre: </strong><a href="/genres/{{game.genres[0]}}" targer="_blank">{{game.genreName}}</a></p>
+                  </div>
+                </div>
+            
+                <div class="content">
+                  {{game.summary}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <div *ngIf="currentGameInfo.length == 0 && !gameLoading" class="notification is-danger">
+          There is no data about this game on <a href="https://api.igdb.com/" target="_blank">api.igdb.com/</a>
+        </div> 
+        <div *ngIf="gameLoading"  class="content has-text-centered">
+            <div class="lds-hourglass"></div>
+            
+          </div>
+</div>
 </div>
 <div *ngIf="currentTab == 'favorite_teams'" class="box">
   <div class="tags">

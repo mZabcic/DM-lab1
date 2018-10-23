@@ -1,0 +1,14 @@
+<div class="box">
+    
+        <div *ngIf="!gameLoading"  class="tags">
+            <ng-container *ngFor="let genre of genres">
+            <span    (click)="navigate(genre.id)" class="tag">{{genre.name}}</span>
+          </ng-container>
+          </div>
+        
+      
+          <div *ngIf="gameLoading"  class="content has-text-centered">
+              <div class="lds-hourglass"></div>
+              
+            </div>
+  </div>

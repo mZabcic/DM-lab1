@@ -1,0 +1,39 @@
+<div class="box">
+    <h2 class="title is-2" *ngIf="!gameLoading">
+      {{genre.name}}
+    </h2>
+    <div  class="box">
+        <div *ngIf="!gameLoading" class="columns is-multiline">
+            <div *ngFor="let game of games" class="column is-one-quarter">
+            <div   class="card">
+                <div class="card-image">
+                  <a href="{{game.url}}" target="_blank">
+                  <figure class="image is-4by3">
+                    <img *ngIf="game.cover != undefined" src="{{game.cover.url}}" alt="">
+                    <img *ngIf="game.cover == undefined" src="https://i0.wp.com/hifadhiafrica.org/wp-content/uploads/2017/01/default-placeholder.png" alt="">
+                  </figure>
+                </a>
+                </div>
+                <div class="card-content">
+                  <div class="media">
+                    
+                    <div class="media-content">
+                      <p class="title is-4">{{game.name}}</p>
+                      
+                    </div>
+                  </div>
+              
+                  <div class="content">
+                    {{game.summary}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+          <div *ngIf="gameLoading"  class="content has-text-centered">
+              <div class="lds-hourglass"></div>
+              
+            </div>
+  </div>
+  </div>

@@ -63,6 +63,11 @@ article {
   }
 
 
+  .card {
+    height: 100%;
+  }
+
+
 
 /* Shared */
 .loginBtn {
